@@ -72,7 +72,7 @@ class ReadersWritersMonitor:
         with self.condition:
             # TODO: Replace 'pass' with your logic
             self.active_readers -= 1
-            print(f"reader{reader_id} has finished reading. Active readers{self.active_readers}")
+            print(f"reader{reader_id} has finished reading. Active readers = {self.active_readers}")
             if self.active_readers == 0:
                 self.condition.notify_all()
 
@@ -94,7 +94,7 @@ class ReadersWritersMonitor:
                 self.condition.wait()
             self.waiting_writers -= 1
             self.active_writers += 1
-            print(f"writer{self.writer_id} start writing. waiting writers{self.waiting_waiters}")
+            print(f"writer{self.writer_id} start writing. waiting writers = {self.waiting_waiters}")
 
     def end_write(self, writer_id: int) -> None:
         """
