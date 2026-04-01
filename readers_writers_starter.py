@@ -58,7 +58,7 @@ class ReadersWritersMonitor:
             while self.active_writers > 0:
                 self.condition.wait()
             self.active_readers += 1
-            print(f"reader{reader_id} start reading. Active readers:{self.active_readers}")
+            print(f"reader{reader_id} start reading. Active readers = {self.active_readers}")
 
     def end_read(self, reader_id: int) -> None:
         """
@@ -94,7 +94,7 @@ class ReadersWritersMonitor:
                 self.condition.wait()
             self.waiting_writers -= 1
             self.active_writers += 1
-            print(f"writer{writer_id} start writing. waiting writers{self.waiting_waiters}")
+            print(f"writer{self.writer_id} start writing. waiting writers{self.waiting_waiters}")
 
     def end_write(self, writer_id: int) -> None:
         """
