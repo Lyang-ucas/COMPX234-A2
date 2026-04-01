@@ -71,7 +71,10 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            pass
+            self.active_readers -= 1
+            print(f"reader{reader_id} has finished reading. Active readers{self.active_readers}")
+            if self.active_readers == 0:
+                self.condition.notify_all()
 
     def start_write(self, writer_id: int) -> None:
         """
@@ -86,7 +89,12 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            pass
+            self.waiting_waiters
+            while self.active_readers > 0 or self.active_writers > 0:
+                self.condition.wait()
+            self.waiting_waiters -= 1
+            self.active_writers = 1
+            print(f"writer{writer_id} is writing. Waiting writers{waiting_waiters}")
 
     def end_write(self, writer_id: int) -> None:
         """
@@ -99,7 +107,10 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             # TODO: Replace 'pass' with your logic
-            pass
+            self.active_writers = 0
+            print(f"writer{writer_id} has finished writing")
+            self.condition.notify_all()
+
 
 # Donot Change this
 class Reader(threading.Thread):
@@ -161,23 +172,28 @@ def main() -> None:
     #TODO: Create at least 3 Reader threads.
     readers = [
         Reader(reader_id=1, monitor=monitor)
+        Reader(reader_id=2, monitor=monitor)
+        Reader(reader_id=3, monitor=monitor)
     ]
     
     #TODO: Create at least 2 writer threads.
     writers = [
         Writer(writer_id=1, monitor=monitor)
+        Writer(writer_id=2, monitor=monitor)
     ]
 
     all_threads = readers + writers
     
     # TODO: Start all threads
-
+    for thread in all_threads:
+        thread.start()
     
     # TODO: Wait for all threads to finish
-
+    for thread in all_threads:
+        thread.join()
 
     # TODO: Print final message that simulation completed
-
+    print(f"\n all simulation has completed")
 
 if __name__ == "__main__":
     main()
