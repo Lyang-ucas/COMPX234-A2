@@ -58,7 +58,7 @@ class ReadersWritersMonitor:
             while self.active_writers > 0:
                 self.condition.wait()
             self.active_readers += 1
-            print(f"reader{reader_id} start reading. Active readers = {self.active_readers}")
+            print(f"Reader {reader_id} starts reading. Active readers = {self.active_readers}")
 
     def end_read(self, reader_id: int) -> None:
         """
@@ -72,7 +72,7 @@ class ReadersWritersMonitor:
         with self.condition:
             # TODO: Replace 'pass' with your logic
             self.active_readers -= 1
-            print(f"reader{reader_id} has finished reading. Active readers = {self.active_readers}")
+            print(f"Reader {reader_id} stops reading. Active readers = {self.active_readers}")
             if self.active_readers == 0:
                 self.condition.notify_all()
 
@@ -94,7 +94,7 @@ class ReadersWritersMonitor:
                 self.condition.wait()
             self.waiting_writers -= 1
             self.active_writers += 1
-            print(f"writer{self.writer_id} start writing. waiting writers = {self.waiting_waiters}")
+            print(f"Writer {writer_id} start writing. waiting writers = {self.waiting_writers}")
 
     def end_write(self, writer_id: int) -> None:
         """
@@ -108,7 +108,7 @@ class ReadersWritersMonitor:
         with self.condition:
             # TODO: Replace 'pass' with your logic
             self.active_writers = 0
-            print(f"writer{writer_id} has finished writing")
+            print(f"Writer{writer_id} stops writing")
             self.condition.notify_all()
 
 
@@ -193,7 +193,7 @@ def main() -> None:
         thread.join()
 
     # TODO: Print final message that simulation completed
-    print(f"\n all simulation has completed")
+    print(f"\n =====simulation completed=====")
 
 if __name__ == "__main__":
     main()
